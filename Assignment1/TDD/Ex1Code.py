@@ -7,7 +7,7 @@ ListOfColors = np.array(["W","B","Y","G","R","b"])
 class CodeMaker:
     def __init__(self, round = 0, guess = np.array([0,0,0,0])):
         self._colors = np.array([1,2,3,4,5,6])
-        self._code = np.array([0,0,0,0]) # Initializing as empty strings
+        self._code = np.array([0,0,0,0]) 
         self._current_guess = guess
         self._round = round
 
@@ -43,16 +43,16 @@ class PlayTheGame(CodeMaker):
         return self._current_guess
 
     def play_ten_rounds(self):
-        input = self._current_guess
         code = CodeMaker().build_code()
         PlayTheGame().do_it_right_please()
         for i in range(10):
             if self._round==10:
                 print("Sorry, you did not win in 10 rounds!")
+                return
             else:
                 self._round += 1
-                input = PlayTheGame(guess = input).take_user_input()
-                if np.array_equal(input, code):
+                self._current_guess = PlayTheGame(guess = self._current_guess).take_user_input()
+                if np.array_equal(self._current_guess, code):
                     print("You Win!")
-                    break
+                    return
                 print(code)  # allows termination because you see the goal

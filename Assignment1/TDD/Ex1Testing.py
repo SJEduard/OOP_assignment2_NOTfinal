@@ -15,13 +15,12 @@ class Tests(unittest.TestCase):
         self.assertNotEqual(True, any(testinput==0))
 
     def TenRounds(self):
-        a = Ex1Code.PlayTheGame()
+        a = Ex1Code.PlayTheGame(round=9)
         a.play_ten_rounds()
-        print(a._round)
-
-                
+        self.assertEqual(10, a._round)
 
 a = Tests()
 a.TenRounds()
 
-# I lost on purpose, and it correctly counted the amount of rounds played! 
+# I lost on purpose, and it correctly counted the amount of rounds played!
+# or at least I started at round 9.
