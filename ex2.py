@@ -1,5 +1,6 @@
 # %%
 import numpy as np
+from numpy.core.multiarray import array as array
 import pandas as pd
 import matplotlib.pyplot as plt
 from abc import ABC, abstractmethod
@@ -94,6 +95,58 @@ class MultipleLinearRegressor(MachineLearningModel):
             Returns the predicted values of the model.
         '''
         return np.matmul(x[:, 1:], self._slope[1:]) + self._intercept
+
+class LassoRegression(MultipleLinearRegressor):
+    def __init__(self, dimension: int = 0, default_intercept: float = 0,
+                penalty: float = 0, alpha: float = 1, gradient: float = 0):
+        super().__init__(dimension, default_intercept)
+        self._penalty = penalty
+        self._alpha = alpha
+        self._gradient = gradient
+    
+    def sign(self, w: np.array) -> np.array:
+        for j in w:
+            if w[j] > 0:
+                w[j] = 1
+            elif w[j] == 0:
+                w[j] = 0
+            else:
+                w[j] = -1
+        return w
+    
+    def init_slope(self, dimension) -> np.array:
+        strategy = input("Select strategy 1 or 2")
+        if strategy == "1":
+            '''dimension or dimension +1?????'''
+            self._slope = np.random.uniform(low=-1, high=1, size=dimension)
+        elif strategy == "2":
+            self.slope = np.random.normal(loc=0, scale=1, size=dimension)
+        else:
+            print("invalid input")
+
+    def train(self, x: np.array, y: np.array) -> None:
+        '''TO DO: 
+        1. define m, alpha, lambda
+        2. make abc for ridge + lasso
+        3. how do we choose between the 2 strategies?
+        4. log info each iteration in train
+        5. add decorators'''
+        m=10 #wtvr
+        for i in range(m):
+            prediction = self.predict(x) #and do what with it.
+            print(f"prediction[{i}]: {prediction}")
+            n = np.size(x, axis = 0) #check later
+            block1 = ((-2)/n)*np.transpose(x)
+            block2 = y - np.matmul(x, self._slope) #b included, check later
+            block3 = self._penalty*self.sign(self._slope) #also check
+            self._gradient = block1*block2 + block3
+            self._slope = self._slope - self._alpha*self._gradient
+
+class RidgeRegression(MultipleLinearRegressor):
+    def __init__(self, dimension: int = 0, default_intercept: float = 0, penalty: float = 0, alpha: float = 1):
+        super().__init__(dimension, default_intercept)
+        self.penalty = penalty
+        self.alpha = alpha
 
 
 class ModelSaver:
