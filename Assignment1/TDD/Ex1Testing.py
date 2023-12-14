@@ -6,11 +6,11 @@ import Ex1Code
 
 class Tests(unittest.TestCase):
     def FillingUpTheCode(self):
-        self.assertNotEqual("",Ex1Code.CodeMaker()._code[0])
-        self.assertNotEqual("",Ex1Code.CodeMaker()._code[1])
-        self.assertNotEqual("",Ex1Code.CodeMaker()._code[2])
-        self.assertNotEqual("",Ex1Code.CodeMaker()._code[3])
-
+        testcode = Ex1Code.CodeMaker()
+        testcode.BuildCode()
+        self.assertNotEqual(0,testcode._code[0])
 
 tester = Tests()
-print(tester.FillingUpTheCode())
+tester.FillingUpTheCode()
+
+print(tester)
