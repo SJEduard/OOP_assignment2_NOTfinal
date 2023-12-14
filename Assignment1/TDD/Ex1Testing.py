@@ -10,7 +10,8 @@ class Tests(unittest.TestCase):
         self.assertNotEqual(0,testcode._code[0])  # By extension of this one working, so do the others.
 
     def TakeUserInput(self):
-        testinput = Ex1Code.CodeMaker().TakeUserInput()# From words to numbers 1 through 6. Input will be "white white white white"
+        testinput = Ex1Code.CodeMaker().TakeUserInput() # From words to numbers 1 through 6. Input will be "WWWW"
+        print(testinput)
         self.assertEqual(1, testinput[0])
 
 tester = Tests().TakeUserInput()
