@@ -4,15 +4,16 @@ ListOfColors = np.array(["W","B","Y","G","R","b"])
 # White Black Yellow Green Red blue
 
 class CodeMaker:
-    def __init__(self):
+    def __init__(self, round = 0):
         self._colors = np.array([1,2,3,4,5,6])
         self._code = np.array([0,0,0,0]) # Initializing as empty strings
         self._current_guess = np.array([0,0,0,0])
-        self._round = 0
+        self._round = round
 
     def BuildCode(self):
         for i in range(4):
             self._code[i] = np.random.choice(self._colors)
+        return self._code
 
     def DoItRightPlease(self):
         print("Guess the code.\n"
@@ -24,7 +25,7 @@ class CodeMaker:
         self._current_guess = np.array([0,0,0,0])
         if self._round == 0:
             CodeMaker().DoItRightPlease()
-        self._round += 1
+            self._round += 1
         user_input = input()
         for i in range(6):
             if user_input[0] == ListOfColors[i]:
@@ -38,4 +39,5 @@ class CodeMaker:
         if any(self._current_guess == 0):
             print("Invalid Input! Game Over! See the instructions "
                   "at the start.")
+            raise ValueError("The Input was invalid.")
         return self._current_guess
