@@ -63,4 +63,7 @@ class PlayTheGame(CodeMaker):
 class HowManyRight(PlayTheGame):
     def how_many_perfect(self):
         perfect = 0
+        for i in range(4):
+            if self._code[i] == self._current_guess[i]:
+                perfect += 1
         return perfect
