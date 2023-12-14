@@ -1,7 +1,8 @@
 import numpy as np
 
-ListOfColors = np.array(["W","B","Y","G","R","b"]) 
+ListOfColors = np.array(["W","B","Y","G","R","b"])
 # White Black Yellow Green Red blue
+
 
 class CodeMaker:
     def __init__(self, round = 0, guess = np.array([0,0,0,0])):
@@ -40,7 +41,7 @@ class PlayTheGame(CodeMaker):
                   "at the start.")
             raise ValueError("The Input was invalid.")
         return self._current_guess
-    
+
     def play_ten_rounds(self):
         input = self._current_guess
         code = CodeMaker().build_code()
