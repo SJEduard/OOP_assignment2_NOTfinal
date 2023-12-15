@@ -120,4 +120,4 @@ class HowManyRight(PlayTheGame):
         return howmany
     
     def how_many_every_color_guess(self, testguess = np.array([0,0,0,0])):
-        return testguess
+        return HowManyRight().how_many_every_color(testguess)

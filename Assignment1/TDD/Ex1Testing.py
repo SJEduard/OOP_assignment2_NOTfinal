@@ -47,12 +47,16 @@ class Tests(unittest.TestCase):
         # I can't test every color right now. I'll make that later.
 
         # This tests the Whites. About time they got tested lol
-        self.assertEqual(2, Ex1Code.HowManyRight().how_many_every_color_first())
+        self.assertEqual(2, 
+                         Ex1Code.HowManyRight()
+                         .how_many_every_color_first())
 
     def GiveArrayOfEveryColorInstead(self):
         # Test input consists of Blue Black Green Green.
-        # Testing the Blues, which should be the last entry of the output array.
-        a = Ex1Code.HowManyRight().how_many_every_color(testcode = np.array([6,2,4,4]))
+        # Testing the Blues, which should be the last entry of the 
+        # output array.
+        a = Ex1Code.HowManyRight().how_many_every_color(testcode = 
+                                                        np.array([6,2,4,4]))
         self.assertEqual(1, a[1])
         self.assertEqual(2, a[3])
         self.assertEqual(1, a[5])
@@ -60,8 +64,11 @@ class Tests(unittest.TestCase):
     def ReturnAmountsInGuessProperly(self):
         # Test input is KKKK.
         # I'm testing if the 1th input of the array here == 4.
-        a = Ex1Code.HowManyRight().how_many_every_color_guess(testguess = np.array([2,2,2,2]))
-        self.assertEqual(4,a[2])
+        a = Ex1Code.HowManyRight().how_many_every_color_guess(testguess = 
+                                                              np.array([2,2,
+                                                                        2,2]))
+        self.assertEqual(4,a[1])
+        self.assertEqual(0,a[5]) # Does not contain Blue at all.
 
 a = Tests()
 a.ReturnAmountsInGuessProperly()
