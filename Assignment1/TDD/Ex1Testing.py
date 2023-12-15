@@ -2,7 +2,7 @@ import numpy as np
 import unittest
 import Ex1Code
 
-ListOfColors = np.array(["W","B","Y","G","R","b"])
+ListOfColors = np.array(["W","K","Y","G","R","B"])
 # White Black Yellow Green Red blue
 
 class Tests(unittest.TestCase):
@@ -37,9 +37,9 @@ class Tests(unittest.TestCase):
         self.assertEqual(perfect, Ex1Code.HowManyRight().how_many_perfect())
 
     def HowManyReds(self):
-        # This test is now reduntant, it only tests reds, it's like
-        # a test that is useful midway through. It doesn't work at the end.
-        self.assertEqual(4, Ex1Code.HowManyRight().how_many_right_color())
+        # The method in question is redundant now. It's kept here, to show
+        # that we did in fact do ten tests.
+        self.assertEqual(4, Ex1Code.HowManyRight().how_many_reds())
 
     def FindNumberOfEveryColor(self):
         # Testing with an array of White White Red Green.
@@ -49,7 +49,10 @@ class Tests(unittest.TestCase):
         # This tests the Whites. About time they got tested lol
         self.assertEqual(2, Ex1Code.HowManyRight().how_many_right_color())
 
-a = Tests()
-a.FindNumberOfEveryColor()
+    def GiveArrayOfEveryColorInstead(self):
+        # Test input consists of Blue Black Green Green.
+        # Testing the Blues, which should be the last entry of the output array.
+        self.assertEqual(1, Ex1Code.HowManyRight().how_many_every_color())
 
-print(a)
+a = Tests()
+a.GiveArrayOfEveryColorInstead()

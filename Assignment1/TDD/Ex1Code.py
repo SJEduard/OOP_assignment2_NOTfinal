@@ -1,6 +1,7 @@
 import numpy as np
 
-ListOfColors = np.array(["W","B","Y","G","R","b"])
+ListOfColors = np.array(["W","K","Y","G","R","B"])
+# List of possible inputs.
 # White Black Yellow Green Red blue
 
 
@@ -22,8 +23,8 @@ class PlayTheGame(CodeMaker):
     def do_it_right_please(self):
         print("Guess the code in 10 rounds.\n"
               "Give input containing no spaces, consisting "
-              "of W for White, B for Black, Y for Yellow, "
-              "G for Green, R for Red and b for Blue.")
+              "of W for White, K for Black, Y for Yellow, "
+              "G for Green, R for Red and B for Blue.")
 
     def take_user_input(self):
         self._current_guess = np.array([0,0,0,0])
@@ -71,7 +72,19 @@ class HowManyRight(PlayTheGame):
                 perfect += 1
         return perfect
 
-    def how_many_each_color(self):
+    def how_many_reds(self):
+        ''' This method is redundant. It was useful as part of the testing
+            with TDD.'''
+        self._code = np.array([5,5,5,5])  # RRRR
+        howmany = 0
+        for i in range(4):
+            if self._code[i] == 5:
+                howmany += 1
+        return howmany
+
+    def how_many_right_color(self):
+        ''' This method is redundant. It was useful as part of the testing
+            with TDD.'''
         self._code = np.array([1,1,5,4])  # WWRG
         howmany = np.array([0,0,0,0,0,0])
         for i in range(4):
@@ -87,4 +100,22 @@ class HowManyRight(PlayTheGame):
                 howmany[4] += 1
             if self._code[i] == 6:
                 howmany[5] += 1
-        return howmany
+        return howmany[0]
+
+    def how_many_every_color(self):
+        self._code = np.array([6,2,4,4]) # BKGG test code
+        howmany = np.array([0,0,0,0,0,0])
+        for i in range(4):
+            if self._code[i] == 1:
+                howmany[0] += 1
+            if self._code[i] == 2:
+                howmany[1] += 1
+            if self._code[i] == 3:
+                howmany[2] += 1
+            if self._code[i] == 4:
+                howmany[3] += 1
+            if self._code[i] == 5:
+                howmany[4] += 1
+            if self._code[i] == 6:
+                howmany[5] += 1
+        return howmany[0]
