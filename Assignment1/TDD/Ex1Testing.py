@@ -57,5 +57,11 @@ class Tests(unittest.TestCase):
         self.assertEqual(2, a[3])
         self.assertEqual(1, a[5])
 
+    def ReturnAmountsInCodeProperly(self):
+        # Test input is WWWW.
+        # I'm testing if the 0th input of the array here == 4.
+        a = Ex1Code.HowManyRight().how_many_every_color_in_the_code()
+        self.assertEqual(4,a[0])
+
 a = Tests()
-a.GiveArrayOfEveryColorInstead()
+a.ReturnAmountsInCodeProperly()

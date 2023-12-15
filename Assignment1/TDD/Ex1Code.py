@@ -119,3 +119,6 @@ class HowManyRight(PlayTheGame):
             if self._code[i] == 6:
                 howmany[5] += 1
         return howmany
+    
+    def how_many_every_color_in_the_code(self):
+        return self._code
