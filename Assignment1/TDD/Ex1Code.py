@@ -102,8 +102,8 @@ class HowManyRight(PlayTheGame):
                 howmany[5] += 1
         return howmany[0]
 
-    def how_many_every_color(self):
-        self._code = np.array([6,2,4,4]) # BKGG test code
+    def how_many_every_color(self, testcode = np.array([0,0,0,0])):
+        self._code = testcode # BKGG test code
         howmany = np.array([0,0,0,0,0,0])
         for i in range(4):
             if self._code[i] == 1:
@@ -120,5 +120,7 @@ class HowManyRight(PlayTheGame):
                 howmany[5] += 1
         return howmany
     
-    def how_many_every_color_in_the_code(self):
-        return self._code
+    def how_many_every_color_guess(self):
+        ## Test guess
+        self._current_guess = np.array([])
+        return 

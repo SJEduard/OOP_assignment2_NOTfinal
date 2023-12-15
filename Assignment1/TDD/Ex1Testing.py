@@ -52,16 +52,10 @@ class Tests(unittest.TestCase):
     def GiveArrayOfEveryColorInstead(self):
         # Test input consists of Blue Black Green Green.
         # Testing the Blues, which should be the last entry of the output array.
-        a = Ex1Code.HowManyRight().how_many_every_color()
+        a = Ex1Code.HowManyRight().how_many_every_color(testcode = np.array([6,2,4,4]))
         self.assertEqual(1, a[1])
         self.assertEqual(2, a[3])
         self.assertEqual(1, a[5])
 
-    def ReturnAmountsInCodeProperly(self):
-        # Test input is WWWW.
-        # I'm testing if the 0th input of the array here == 4.
-        a = Ex1Code.HowManyRight().how_many_every_color_in_the_code()
-        self.assertEqual(4,a[0])
-
 a = Tests()
-a.ReturnAmountsInCodeProperly()
+a.GiveArrayOfEveryColorInstead()
