@@ -105,7 +105,7 @@ class LassoRegression(MultipleLinearRegressor):
         self._gradient = gradient
     
     def sign(self, w: np.array) -> np.array:
-        for j in w:
+        for j in range(np.size(w)):
             if w[j] > 0:
                 w[j] = 1
             elif w[j] == 0:
@@ -115,32 +115,38 @@ class LassoRegression(MultipleLinearRegressor):
         return w
     
     def init_slope(self, dimension) -> np.array:
+        '''
         strategy = input("Select strategy 1 or 2")
         if strategy == "1":
-            '''dimension or dimension +1?????'''
+            print("strat 1 chosen")
             self._slope = np.random.uniform(low=-1, high=1, size=dimension)
         elif strategy == "2":
+            print("strat 2 chosen")
             self.slope = np.random.normal(loc=0, scale=1, size=dimension)
         else:
-            print("invalid input")
+            print("invalid input")'''
+        self._slope = np.random.uniform(low=-1, high=1, size=dimension)
 
     def train(self, x: np.array, y: np.array) -> None:
         '''TO DO: 
-        1. define m, alpha, lambda
-        2. make abc for ridge + lasso
-        3. how do we choose between the 2 strategies?
-        4. log info each iteration in train
-        5. add decorators'''
-        m=10 #wtvr
+        1. implement loss f
+        2. define m, alpha, lambda
+        3. log info each iteration in train
+        4. make abc for ridge + lasso
+        5. how do we choose between the 2 strategies?
+        6. add decorators'''
+        m=100
+        self.init_slope(np.size(x, axis=1))
         for i in range(m):
-            prediction = self.predict(x) #and do what with it.
-            print(f"prediction[{i}]: {prediction}")
-            n = np.size(x, axis = 0) #check later
+            #prediction = self.predict(x) #and do what with it.
+            #print(f"prediction[{i}]: {prediction}")
+            n = np.size(x, axis = 0)
             block1 = ((-2)/n)*np.transpose(x)
-            block2 = y - np.matmul(x, self._slope) #b included, check later
-            block3 = self._penalty*self.sign(self._slope) #also check
-            self._gradient = block1*block2 + block3
-            self._slope = self._slope - self._alpha*self._gradient
+            block2 = y - np.matmul(x, self._slope)
+            block3 = self._penalty*self.sign(self._slope) 
+            self._gradient = np.matmul(block1, block2) + block3
+            self._slope = self._slope - (self._alpha*self._gradient)
+
 
 class RidgeRegression(MultipleLinearRegressor):
     def __init__(self, dimension: int = 0, default_intercept: float = 0, penalty: float = 0, alpha: float = 1):
@@ -396,9 +402,28 @@ if __name__ == "__main__":
     data = pd.DataFrame(diabetes.data, columns=diabetes.feature_names)
     # Two categorical features are removed
     data.drop(columns=['sex', 's4'], inplace=True)
-    x = data.values
-    y = diabetes.target
+    #x = data.values
+    #y = diabetes.target
 
+    '''trying out lasso'''
+    #axis = 1: features
+    #axis = 0: data points
+    
+    x = [[1, 2, 6, 4, 5], [6, 3, 5, 2, 5], [2, 6, 1, 1, 3], [4, 3, 7, 9, 2]]
+    y = [7, 3, 6, 12]
+
+    from sklearn.linear_model import Lasso
+    scikit_lasso = Lasso(alpha=1.0)
+    scikit_lasso.fit(x, y)
+    
+    lasso = LassoRegression(dimension=np.size(y), alpha=0.01, penalty=1.0)
+    x = lasso.preprocessing(x)
+    lasso.train(x, y)
+    #lasso_pred = lasso.predict(x)
+    print(f"model slope: {lasso._slope} \n gradient: {lasso._gradient}")
+    print(f'scikit slope: {scikit_lasso.coef_}')
+
+    '''
     model = MultipleLinearRegressor(dimension=np.size(y))
     x = model.preprocessing(x)
     reg = linreg().fit(x, y)
@@ -409,9 +434,9 @@ if __name__ == "__main__":
 
     mse_model = mean_squared_error(y, model_pred)
     mse_scikit = mean_squared_error(y, scikit_pred)
-
+    print(f"regression slope: {model._slope}, scikit slope: {reg.coef_}")
     print("MSE ground truth and predictions, this model: ", mse_model)
-    print("MSE ground truth and predictions, by Scikit:  ", mse_scikit)
+    print("MSE ground truth and predictions, by Scikit:  ", mse_scikit)'''
 
     # The below comments are code to test-run the ModelSaver class.
     # It was switched off, so as not to create files on the user's local pc.
@@ -452,8 +477,8 @@ if __name__ == "__main__":
 
     # #########################################################################
 
-    model.slope = [1,2,3,4]
-    model.intercept = 5
-    print(model.slope)
+    #model.slope = [1,2,3,4]
+    #model.intercept = 5
+    #print(model.slope)
 
 # %%
