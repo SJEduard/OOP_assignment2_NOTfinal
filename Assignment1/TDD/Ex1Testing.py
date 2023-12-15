@@ -2,6 +2,8 @@ import numpy as np
 import unittest
 import Ex1Code
 
+ListOfColors = np.array(["W","B","Y","G","R","b"])
+# White Black Yellow Green Red blue
 
 class Tests(unittest.TestCase):
     def FillingUpTheCode(self):
@@ -34,6 +36,13 @@ class Tests(unittest.TestCase):
                 perfect += 1
         self.assertEqual(perfect, Ex1Code.HowManyRight().how_many_perfect())
 
+    def HowManyReds(self):
+        a = Ex1Code.HowManyRight(round = 9)
+        
+        self.assertEqual(4, Ex1Code.HowManyRight().how_many_right_color())
+
 a = Tests()
-a.WhichOnesPerfect()
+a.HowManyReds()
+
+print(a)
 

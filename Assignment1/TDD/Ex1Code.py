@@ -67,3 +67,8 @@ class HowManyRight(PlayTheGame):
             if self._code[i] == self._current_guess[i]:
                 perfect += 1
         return perfect
+    
+    def how_many_right_color(self):
+        self._code = np.array([5,5,5,5])  # All reds
+        howmany = 0
+        return howmany
