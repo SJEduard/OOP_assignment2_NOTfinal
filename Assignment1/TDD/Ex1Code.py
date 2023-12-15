@@ -103,24 +103,21 @@ class HowManyRight(PlayTheGame):
         return howmany[0]
 
     def how_many_every_color(self, testcode = np.array([0,0,0,0])):
-        self._code = testcode # BKGG test code
         howmany = np.array([0,0,0,0,0,0])
         for i in range(4):
-            if self._code[i] == 1:
+            if testcode[i] == 1:
                 howmany[0] += 1
-            if self._code[i] == 2:
+            if testcode[i] == 2:
                 howmany[1] += 1
-            if self._code[i] == 3:
+            if testcode[i] == 3:
                 howmany[2] += 1
-            if self._code[i] == 4:
+            if testcode[i] == 4:
                 howmany[3] += 1
-            if self._code[i] == 5:
+            if testcode[i] == 5:
                 howmany[4] += 1
-            if self._code[i] == 6:
+            if testcode[i] == 6:
                 howmany[5] += 1
         return howmany
     
-    def how_many_every_color_guess(self):
-        ## Test guess
-        self._current_guess = np.array([])
-        return 
+    def how_many_every_color_guess(self, testguess = np.array([0,0,0,0])):
+        return testguess

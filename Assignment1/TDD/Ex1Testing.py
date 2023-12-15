@@ -57,5 +57,11 @@ class Tests(unittest.TestCase):
         self.assertEqual(2, a[3])
         self.assertEqual(1, a[5])
 
+    def ReturnAmountsInGuessProperly(self):
+        # Test input is KKKK.
+        # I'm testing if the 1th input of the array here == 4.
+        a = Ex1Code.HowManyRight().how_many_every_color_guess(testguess = np.array([2,2,2,2]))
+        self.assertEqual(4,a[2])
+
 a = Tests()
-a.GiveArrayOfEveryColorInstead()
+a.ReturnAmountsInGuessProperly()
