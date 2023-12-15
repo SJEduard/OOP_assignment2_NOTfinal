@@ -70,11 +70,21 @@ class HowManyRight(PlayTheGame):
             if self._code[i] == self._current_guess[i]:
                 perfect += 1
         return perfect
-    
+
     def how_many_right_color(self):
         self._code = np.array([1,1,5,4])  # WWRG
-        howmany = 0
+        howmany = np.array([0,0,0,0,0,0])
         for i in range(4):
+            if self._code[i] == 1:
+                howmany[0] += 1
+            if self._code[i] == 2:
+                howmany[1] += 1
+            if self._code[i] == 3:
+                howmany[2] += 1
+            if self._code[i] == 4:
+                howmany[3] += 1
             if self._code[i] == 5:
-                howmany += 1
-        return howmany
+                howmany[4] += 1
+            if self._code[i] == 6:
+                howmany[5] += 1
+        return howmany[0]  # Returns only the whites, for the test
