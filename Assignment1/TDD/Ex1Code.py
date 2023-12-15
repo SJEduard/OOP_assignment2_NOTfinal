@@ -118,4 +118,4 @@ class HowManyRight(PlayTheGame):
                 howmany[4] += 1
             if self._code[i] == 6:
                 howmany[5] += 1
-        return howmany[0]
+        return howmany

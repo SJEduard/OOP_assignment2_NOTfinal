@@ -52,7 +52,8 @@ class Tests(unittest.TestCase):
     def GiveArrayOfEveryColorInstead(self):
         # Test input consists of Blue Black Green Green.
         # Testing the Blues, which should be the last entry of the output array.
-        self.assertEqual(1, Ex1Code.HowManyRight().how_many_every_color())
+        a = Ex1Code.HowManyRight().how_many_every_color()
+        self.assertEqual(1, a[5])
 
 a = Tests()
 a.GiveArrayOfEveryColorInstead()
