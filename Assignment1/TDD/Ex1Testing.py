@@ -53,6 +53,8 @@ class Tests(unittest.TestCase):
         # Test input consists of Blue Black Green Green.
         # Testing the Blues, which should be the last entry of the output array.
         a = Ex1Code.HowManyRight().how_many_every_color()
+        self.assertEqual(1, a[1])
+        self.assertEqual(2, a[3])
         self.assertEqual(1, a[5])
 
 a = Tests()
