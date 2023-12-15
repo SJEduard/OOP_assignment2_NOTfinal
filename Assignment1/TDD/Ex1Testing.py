@@ -70,5 +70,9 @@ class Tests(unittest.TestCase):
         self.assertEqual(4,a[1])
         self.assertEqual(0,a[5]) # Does not contain Blue at all.
 
+    def ColorsRightPerGuess(self):
+        # I will hard-change the guess fully a correct guess, and see what happens.
+        self.assertEqual(4,Ex1Code.HowManyRight().colors_guessed_correctly())
+
 a = Tests()
-a.ReturnAmountsInGuessProperly()
+a.ColorsRightPerGuess()

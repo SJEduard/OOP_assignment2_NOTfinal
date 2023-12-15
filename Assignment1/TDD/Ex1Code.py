@@ -121,3 +121,8 @@ class HowManyRight(PlayTheGame):
     
     def how_many_every_color_guess(self, testguess = np.array([0,0,0,0])):
         return HowManyRight().how_many_every_color(testguess)
+    
+    def colors_guessed_correctly(self):
+        correctcolors = 0
+        self._current_guess = self._code
+        return correctcolors
