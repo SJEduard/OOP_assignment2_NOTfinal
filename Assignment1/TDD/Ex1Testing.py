@@ -47,7 +47,7 @@ class Tests(unittest.TestCase):
         # I can't test every color right now. I'll make that later.
 
         # This tests the Whites. About time they got tested lol
-        self.assertEqual(2, Ex1Code.HowManyRight().how_many_right_color())
+        self.assertEqual(2, Ex1Code.HowManyRight().how_many_every_color_first())
 
     def GiveArrayOfEveryColorInstead(self):
         # Test input consists of Blue Black Green Green.

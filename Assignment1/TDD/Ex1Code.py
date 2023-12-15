@@ -82,7 +82,7 @@ class HowManyRight(PlayTheGame):
                 howmany += 1
         return howmany
 
-    def how_many_right_color(self):
+    def how_many_every_color_first(self):
         ''' This method is redundant. It was useful as part of the testing
             with TDD.'''
         self._code = np.array([1,1,5,4])  # WWRG
