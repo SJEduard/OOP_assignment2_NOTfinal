@@ -37,12 +37,19 @@ class Tests(unittest.TestCase):
         self.assertEqual(perfect, Ex1Code.HowManyRight().how_many_perfect())
 
     def HowManyReds(self):
-        a = Ex1Code.HowManyRight(round = 9)
-        
+        # This test is now reduntant, it only tests reds, it's like
+        # a test that is useful midway through. It doesn't work at the end.
         self.assertEqual(4, Ex1Code.HowManyRight().how_many_right_color())
 
+    def FindNumberOfEveryColor(self):
+        # Testing with an array of White White Red Green.
+        # For the red test, the output isn't even an array yet.
+        # I can't test every color right now. I'll make that later.
+
+        # This tests the Whites. About time they got tested lol
+        self.assertEqual(2, Ex1Code.HowManyRight().how_many_right_color())
+
 a = Tests()
-a.HowManyReds()
+a.FindNumberOfEveryColor()
 
 print(a)
-

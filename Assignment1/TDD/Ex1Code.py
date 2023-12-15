@@ -5,7 +5,8 @@ ListOfColors = np.array(["W","B","Y","G","R","b"])
 
 
 class CodeMaker:
-    def __init__(self, round = 0, guess = np.array([0,0,0,0]), code = np.array([0,0,0,0])):
+    def __init__(self, round = 0, guess = np.array([0,0,0,0]), 
+                 code = np.array([0,0,0,0])):
         self._colors = np.array([1,2,3,4,5,6])
         self._code = code
         self._current_guess = guess
@@ -51,9 +52,11 @@ class PlayTheGame(CodeMaker):
                 return
             else:
                 self._round += 1
-                self._current_guess = PlayTheGame(guess = self._current_guess).take_user_input()
+                self._current_guess = PlayTheGame(
+                    guess = self._current_guess).take_user_input()
                 self._code = code
-                HowManyRight(guess = self._current_guess, code = code).how_many_perfect()
+                HowManyRight(guess = self._current_guess,
+                             code = code).how_many_perfect()
                 if np.array_equal(self._current_guess, code):
                     print("You win!")
                     return
@@ -69,7 +72,7 @@ class HowManyRight(PlayTheGame):
         return perfect
     
     def how_many_right_color(self):
-        self._code = np.array([5,5,5,5])  # All reds
+        self._code = np.array([1,1,5,4])  # WWRG
         howmany = 0
         for i in range(4):
             if self._code[i] == 5:
