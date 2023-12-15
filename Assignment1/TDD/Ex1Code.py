@@ -71,4 +71,7 @@ class HowManyRight(PlayTheGame):
     def how_many_right_color(self):
         self._code = np.array([5,5,5,5])  # All reds
         howmany = 0
+        for i in range(4):
+            if self._code[i] == 5:
+                howmany += 1
         return howmany
