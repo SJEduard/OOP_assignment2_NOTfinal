@@ -71,7 +71,7 @@ class HowManyRight(PlayTheGame):
                 perfect += 1
         return perfect
 
-    def how_many_right_color(self):
+    def how_many_each_color(self):
         self._code = np.array([1,1,5,4])  # WWRG
         howmany = np.array([0,0,0,0,0,0])
         for i in range(4):
@@ -87,4 +87,4 @@ class HowManyRight(PlayTheGame):
                 howmany[4] += 1
             if self._code[i] == 6:
                 howmany[5] += 1
-        return howmany[0]  # Returns only the whites, for the test
+        return howmany
