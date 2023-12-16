@@ -68,6 +68,8 @@ class PlayTheGame(CodeMaker):
     def play_ten_rounds(self):
         code = CodeMaker().build_code()
         PlayTheGame().do_it_right_please()
+        while self._round < 10:
+            self._round += 1
         return self._round
 
 
