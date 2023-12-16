@@ -90,7 +90,7 @@ class Tests(unittest.TestCase):
         # I will now incrementally build the method to play a full game.
         # I first want to be able to stop it when ten rounds are reached.
         # Let's try to at least _reach_ 10 rounds.
-        self.assertEqual(10, Ex1Code.PlayTheGame().play_ten_rounds())
+        self.assertEqual(10, Ex1Code.PlayTheGame().count_ten_rounds())
 
 
 a = Tests()

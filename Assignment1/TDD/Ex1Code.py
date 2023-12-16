@@ -65,8 +65,9 @@ class PlayTheGame(CodeMaker):
                     return
                 print(code)
 
-    def play_ten_rounds(self):
-        code = CodeMaker().build_code()
+    def count_ten_rounds(self):
+        ''' This method is redundant. It was useful for
+            testing TDD. It will not be called.'''
         PlayTheGame().do_it_right_please()
         while self._round < 10:
             self._round += 1
