@@ -2,14 +2,14 @@ import numpy as np
 import unittest
 import Ex1Code
 
-ListOfColors = np.array(["W","K","Y","G","R","B"])
+ListOfColors = np.array(["W", "K", "Y", "G", "R", "B"])
 # White Black Yellow Green Red blue
 
 class Tests(unittest.TestCase):
     def FillingUpTheCode(self):
         testcode = Ex1Code.CodeMaker()
         testcode.build_code()
-        self.assertNotEqual(0,testcode[0])
+        self.assertNotEqual(0, testcode[0])
 
     def TakeUserInput(self):
         testinput = Ex1Code.PlayTheGame().take_user_input()
@@ -18,7 +18,7 @@ class Tests(unittest.TestCase):
 
     def TenRounds(self):
         a = Ex1Code.PlayTheGame(round=0)
-        a.play_ten_rounds()
+        a.play_ten_rounds_old()
         self.assertNotEqual(0, a._round)
 
         # When playing, the round always increases, so it won't
@@ -26,7 +26,7 @@ class Tests(unittest.TestCase):
 
     def WhichOnesPerfect(self):
         a = Ex1Code.PlayTheGame(round = 9)
-        a.play_ten_rounds()
+        a.play_ten_rounds_old()
         ## Whatever is stored at the end, I want to check.
         # I get to see the code at the end, so i'll be able to see
         # how many of the guesses were perfect.
@@ -47,7 +47,7 @@ class Tests(unittest.TestCase):
         # I can't test every color right now. I'll make that later.
 
         # This tests the Whites. About time they got tested lol
-        self.assertEqual(2, 
+        self.assertEqual(2,
                          Ex1Code.HowManyRight()
                          .how_many_every_color_first())
 
@@ -55,8 +55,9 @@ class Tests(unittest.TestCase):
         # Test input consists of Blue Black Green Green.
         # Testing the Blues, which should be the last entry of the 
         # output array.
-        a = Ex1Code.HowManyRight().how_many_every_color(testcode = 
-                                                        np.array([6,2,4,4]))
+        a = Ex1Code.HowManyRight().how_many_every_color(code =
+                                                        np.array([6, 2,
+                                                                  4, 4]))
         self.assertEqual(1, a[1])
         self.assertEqual(2, a[3])
         self.assertEqual(1, a[5])
@@ -64,17 +65,21 @@ class Tests(unittest.TestCase):
     def ReturnAmountsInGuessProperly(self):
         # Test input is KKKK.
         # I'm testing if the 1th input of the array here == 4.
-        a = Ex1Code.HowManyRight().how_many_every_color_guess(testguess = 
-                                                              np.array([2,2,
-                                                                        2,2]))
-        self.assertEqual(4,a[1])
-        self.assertEqual(0,a[5]) # Does not contain Blue at all.
+        a = Ex1Code.HowManyRight().how_many_every_color_guess(guess =
+                                                              np.array([2,
+                                                                        2,
+                                                                        2,
+                                                                        2]))
+        self.assertEqual(4, a[1])
+        self.assertEqual(0, a[5]) # Does not contain Blue at all.
 
     def ColorsRightPerGuess(self):
-        # I will hard-change the guess fully a correct guess, and see what happens.
-        self.assertEqual(3,Ex1Code.HowManyRight(guess = 
-                                                np.array([2,3,3,5]),
-                                                code = np.array([6,5,3,3]))
+        # I will hard-change the guess fully a correct guess, and see what
+        # happens.
+        self.assertEqual(3, Ex1Code.HowManyRight(guess = 
+                                                np.array([2, 3, 3, 5]),
+                                                code = np.array([6, 5,
+                                                                 3, 3]))
                                                 .colors_guessed_correctly())
 
 
