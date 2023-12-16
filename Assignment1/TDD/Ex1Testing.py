@@ -41,7 +41,9 @@ class Tests(unittest.TestCase):
     def HowManyReds(self):
         # The method in question is redundant now. It's kept here, to show
         # that we did in fact do ten tests.
-        self.assertEqual(4, Ex1Code.HowManyRight().how_many_reds())
+        self.assertEqual(4, Ex1Code.HowManyRight(code = 
+                                                 np.array([5,5,5,5]))
+                                                 .how_many_reds())
 
     def FindNumberOfEveryColor(self):
         # Testing with an array of White White Red Green.
@@ -50,7 +52,7 @@ class Tests(unittest.TestCase):
 
         # This tests the Whites. About time they got tested lol
         self.assertEqual(2,
-                         Ex1Code.HowManyRight()
+                         Ex1Code.HowManyRight(code = np.array([1,1,5,4]))
                          .how_many_every_color_first())
 
     def GiveArrayOfEveryColorInstead(self):
@@ -84,11 +86,12 @@ class Tests(unittest.TestCase):
                                                                  3, 3]))
                                                 .colors_guessed_correctly())
 
-    def PlayAFullGame(self):
+    def PlayAFullGame_first(self):
         # I will now incrementally build the method to play a full game.
-        # I first want to be able to stop it when ten games are reached.
-        return
+        # I first want to be able to stop it when ten rounds are reached.
+        # Let's try to at least _reach_ 10 rounds.
+        self.assertEqual(10, Ex1Code.PlayTheGame().play_ten_rounds())
 
 
 a = Tests()
-a.WhichOnesPerfect()
+a.PlayAFullGame_first()

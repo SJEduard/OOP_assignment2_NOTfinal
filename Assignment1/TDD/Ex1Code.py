@@ -66,7 +66,9 @@ class PlayTheGame(CodeMaker):
                 print(code)
 
     def play_ten_rounds(self):
-        return
+        code = CodeMaker().build_code()
+        PlayTheGame().do_it_right_please()
+        return self._round
 
 
 class HowManyRight(PlayTheGame):
@@ -80,7 +82,6 @@ class HowManyRight(PlayTheGame):
     def how_many_reds(self):
         ''' This method is redundant. It was useful as part of the testing
             with TDD. It will not be called.'''
-        self._code = np.array([5,5,5,5])  # RRRR
         howmany = 0
         for i in range(4):
             if self._code[i] == 5:
@@ -90,22 +91,21 @@ class HowManyRight(PlayTheGame):
     def how_many_every_color_first(self):
         ''' This method is redundant. It was useful as part of the testing
             with TDD. It will not be called.'''
-        self._code = np.array([1,1,5,4])  # WWRG
-        howmany = np.array([0,0,0,0,0,0])
+        code_hist = np.array([0,0,0,0,0,0])
         for i in range(4):
             if self._code[i] == 1:
-                howmany[0] += 1
+                code_hist[0] += 1
             if self._code[i] == 2:
-                howmany[1] += 1
+                code_hist[1] += 1
             if self._code[i] == 3:
-                howmany[2] += 1
+                code_hist[2] += 1
             if self._code[i] == 4:
-                howmany[3] += 1
+                code_hist[3] += 1
             if self._code[i] == 5:
-                howmany[4] += 1
+                code_hist[4] += 1
             if self._code[i] == 6:
-                howmany[5] += 1
-        return howmany[0]
+                code_hist[5] += 1
+        return code_hist[0]
 
     def how_many_every_color(self, code = np.array([0, 0, 0, 0])):
         code_hist = np.array([0,0,0,0,0,0])
