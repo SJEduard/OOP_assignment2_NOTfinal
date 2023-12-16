@@ -54,7 +54,7 @@ class PlayTheGame(CodeMaker):
                 print("Sorry, you did not win in 10 rounds!")
                 return
             else:
-                self._round = i+1
+                self._round += 1
                 self._current_guess = PlayTheGame(
                     guess = self._current_guess).take_user_input()
                 self._code = code

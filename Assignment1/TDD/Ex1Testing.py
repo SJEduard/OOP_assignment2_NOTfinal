@@ -34,7 +34,9 @@ class Tests(unittest.TestCase):
         for i in range(4):
             if a._code[i] == a._current_guess[i]:
                 perfect += 1
-        self.assertEqual(perfect, Ex1Code.HowManyRight().how_many_perfect())
+        self.assertEqual(perfect, Ex1Code
+                         .HowManyRight(guess = a._current_guess)
+                         .how_many_perfect())
 
     def HowManyReds(self):
         # The method in question is redundant now. It's kept here, to show
@@ -82,6 +84,11 @@ class Tests(unittest.TestCase):
                                                                  3, 3]))
                                                 .colors_guessed_correctly())
 
+    def PlayAFullGame(self):
+        # I will now incrementally build the method to play a full game.
+        # I first want to be able to stop it when ten games are reached.
+        return
+
 
 a = Tests()
-a.ColorsRightPerGuess()
+a.WhichOnesPerfect()
