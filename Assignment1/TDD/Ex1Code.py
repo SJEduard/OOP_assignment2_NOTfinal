@@ -123,10 +123,7 @@ class HowManyRight(PlayTheGame):
         return HowManyRight().how_many_every_color(testguess)
     
     def colors_guessed_correctly(self):
-        CodeMaker().build_code()
         correctcolors = 0
-        print("The code is ",self._code)
-        self._current_guess = self._code  # For testing
         hist_guess = HowManyRight().how_many_every_color(self._current_guess)
         hist_code = HowManyRight().how_many_every_color(self._code)
         for i in range(6):
@@ -134,7 +131,6 @@ class HowManyRight(PlayTheGame):
             color_in_code = hist_code[i]
             while (color_guessed > 0) and (color_in_code) > 0:
                 correctcolors += 1
-                print("This index was found: ", i+1)
                 color_guessed -= 1
                 color_in_code -= 1
         return correctcolors

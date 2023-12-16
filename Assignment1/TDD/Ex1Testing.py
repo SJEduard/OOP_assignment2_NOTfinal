@@ -72,7 +72,11 @@ class Tests(unittest.TestCase):
 
     def ColorsRightPerGuess(self):
         # I will hard-change the guess fully a correct guess, and see what happens.
-        self.assertEqual(4,Ex1Code.HowManyRight().colors_guessed_correctly())
+        self.assertEqual(3,Ex1Code.HowManyRight(guess = 
+                                                np.array([2,3,3,5]),
+                                                code = np.array([6,5,3,3]))
+                                                .colors_guessed_correctly())
+
 
 a = Tests()
 a.ColorsRightPerGuess()
