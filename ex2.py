@@ -4,6 +4,7 @@ from numpy.core.multiarray import array as array
 import pandas as pd
 import matplotlib.pyplot as plt
 from abc import ABC, abstractmethod
+import logging
 
 
 class MachineLearningModel(ABC):
@@ -13,7 +14,6 @@ class MachineLearningModel(ABC):
 
     def predict(self, x: np.array) -> np.array:
         pass
-
 
 class MultipleLinearRegressor(MachineLearningModel):
     def __init__(self, dimension: int = 0, default_intercept: float = 0):
@@ -96,13 +96,116 @@ class MultipleLinearRegressor(MachineLearningModel):
         '''
         return np.matmul(x[:, 1:], self._slope[1:]) + self._intercept
 
-class LassoRegression(MultipleLinearRegressor):
+class Regularization(MultipleLinearRegressor):
     def __init__(self, dimension: int = 0, default_intercept: float = 0,
-                penalty: float = 0, alpha: float = 1, gradient: float = 0):
+                default_penalty: float = 0, default_alpha: float = 0, default_gradient: float = 0):
         super().__init__(dimension, default_intercept)
-        self._penalty = penalty
-        self._alpha = alpha
-        self._gradient = gradient
+        self.penalty = default_penalty #public so user can customize it according to their dataset
+        self._alpha = default_alpha
+        self._gradient = default_gradient
+
+    @property
+    def alpha(self) -> float:
+        return self._alpha
+
+    @alpha.getter
+    def alpha(self) -> float:
+        return self._alpha
+
+    @alpha.setter
+    def alpha(self, value:float) -> None:
+        self._alpha = value
+
+    @property
+    def gradient(self) -> np.array:
+        return self._gradient
+
+    @gradient.getter
+    def gradient(self) -> np.array:
+        return self._gradient
+
+    @gradient.setter
+    def gradient(self, params:np.array) -> None:
+        self._gradient = params
+
+    def log_info(self, i: int, loss: float, mae: float) -> None:
+        '''Logs the iteration number, the Loss function and the Mean Absolute Error attained so far.
+        
+        Args: 
+        i: iteration number
+        loss: the Loss function
+        mae: the Mean Absolue Error 
+        
+        Returns: None'''
+
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s %(levelname)s %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+            filename="regression.log"
+        )
+
+        logging.info(f"Iteration: {i}")
+        logging.info(f"Loss function attained: {loss}")
+        logging.info(f"Mean Absolute Error attained: {mae}")
+
+    def init_slope(self, dimension: int) -> np.array:
+        '''Randomly initializes the slope, according to two strategies that the user can choose between.
+        First strategy draws the slope elements from a uniform distribution between -1 and 1.
+        Second strategy draws the slope elements from a normal distribution with 0-mean and std 1
+        
+        Args: dimension: the size of the slope = number of features in the dataset +1
+        
+        Returns: the slope'''
+        strategy = input("Select strategy 1 or 2")
+        if strategy == "1":
+            print("strat 1 chosen")
+            self._slope = np.random.uniform(low=-1, high=1, size=dimension)
+            return self._slope
+        elif strategy == "2":
+            print("strat 2 chosen")
+            self._slope = np.random.normal(loc=0, scale=1, size=dimension)
+            return self._slope
+        else:
+            print("invalid input")   
+    
+    def grad_penalty(self) -> np.array:
+        '''This function is implemented individually for 
+        Lasso and Ridge in their respective classes''' 
+        pass
+
+    def compute_pnorm(self) -> float:
+        '''In the LassoRegression class, 1-norm is computed and
+        In the RidgeRegression class, 2-norm is computed'''
+        pass
+
+    def train(self, x: np.array, y: np.array) -> None:
+        '''TO THINK ABOUT: 
+        1. attributes?
+        3. m, alpha, lambda
+        5. grad_penalty and compute_pnorm functions ugly in the regularization class or no? 
+        6. turn off log file?
+        7. fix 'invalid input', raise error.
+        x. type checks, comments, clean up, make report'''
+        n = np.size(x, axis = 0)
+        self.init_slope(np.size(x, axis=1))
+        ITERATIONS = 100
+        for i in range(ITERATIONS):
+            block1 = ((-2)/n)*np.transpose(x)
+            block2 = y - np.matmul(x, self._slope)
+            block3 = self.grad_penalty()
+
+            self._gradient = np.matmul(block1, block2) + block3
+            self._slope = self._slope - (self._alpha*self._gradient)
+
+            prediction = self.predict(x)
+
+            p_norm = self.compute_pnorm()
+            loss = (1/n)*sum((y-prediction)**2) + self.penalty * p_norm
+            mae = (1/n)*sum(np.absolute(y-prediction))
+            self.log_info(i, loss, mae)
+    
+class LassoRegression(Regularization):
     
     def sign(self, w: np.array) -> np.array:
         for j in range(np.size(w)):
@@ -114,46 +217,23 @@ class LassoRegression(MultipleLinearRegressor):
                 w[j] = -1
         return w
     
-    def init_slope(self, dimension) -> np.array:
-        '''
-        strategy = input("Select strategy 1 or 2")
-        if strategy == "1":
-            print("strat 1 chosen")
-            self._slope = np.random.uniform(low=-1, high=1, size=dimension)
-        elif strategy == "2":
-            print("strat 2 chosen")
-            self.slope = np.random.normal(loc=0, scale=1, size=dimension)
-        else:
-            print("invalid input")'''
-        self._slope = np.random.uniform(low=-1, high=1, size=dimension)
+    def grad_penalty(self) -> np.array:
+        penalty = self.penalty*self.sign(self._slope)
+        return penalty
+    
+    def compute_pnorm(self) -> float:
+        p_norm = sum(np.absolute(self._slope)) 
+        return p_norm
 
-    def train(self, x: np.array, y: np.array) -> None:
-        '''TO DO: 
-        1. implement loss f
-        2. define m, alpha, lambda
-        3. log info each iteration in train
-        4. make abc for ridge + lasso
-        5. how do we choose between the 2 strategies?
-        6. add decorators'''
-        m=100
-        self.init_slope(np.size(x, axis=1))
-        for i in range(m):
-            #prediction = self.predict(x) #and do what with it.
-            #print(f"prediction[{i}]: {prediction}")
-            n = np.size(x, axis = 0)
-            block1 = ((-2)/n)*np.transpose(x)
-            block2 = y - np.matmul(x, self._slope)
-            block3 = self._penalty*self.sign(self._slope) 
-            self._gradient = np.matmul(block1, block2) + block3
-            self._slope = self._slope - (self._alpha*self._gradient)
+class RidgeRegression(Regularization):
 
+    def grad_penalty(self) -> np.array:
+        penalty = 2*self.penalty*self._slope
+        return penalty
 
-class RidgeRegression(MultipleLinearRegressor):
-    def __init__(self, dimension: int = 0, default_intercept: float = 0, penalty: float = 0, alpha: float = 1):
-        super().__init__(dimension, default_intercept)
-        self.penalty = penalty
-        self.alpha = alpha
-
+    def compute_pnorm(self) -> float:
+        p_norm = np.sqrt(sum(self._slope **2))
+        return p_norm
 
 class ModelSaver:
     def __init__(self, format: str = 'csv'):
@@ -214,7 +294,6 @@ class ModelSaver:
 
         model._slope = parameters
         model._intercept = parameters[0]
-
 
 class RegressionPlotter:
     def __init__(self) -> None:
@@ -402,30 +481,45 @@ if __name__ == "__main__":
     data = pd.DataFrame(diabetes.data, columns=diabetes.feature_names)
     # Two categorical features are removed
     data.drop(columns=['sex', 's4'], inplace=True)
-    #x = data.values
-    #y = diabetes.target
+    x = data.values
+    y = diabetes.target
 
-    '''trying out lasso'''
-    #axis = 1: features
-    #axis = 0: data points
-    
-    x = [[1, 2, 6, 4, 5], [6, 3, 5, 2, 5], [2, 6, 1, 1, 3], [4, 3, 7, 9, 2]]
-    y = [7, 3, 6, 12]
+    #trying out lasso and ridge regression:
+
 
     from sklearn.linear_model import Lasso
     scikit_lasso = Lasso(alpha=1.0)
     scikit_lasso.fit(x, y)
-    
-    lasso = LassoRegression(dimension=np.size(y), alpha=0.01, penalty=1.0)
-    x = lasso.preprocessing(x)
-    lasso.train(x, y)
-    #lasso_pred = lasso.predict(x)
-    print(f"model slope: {lasso._slope} \n gradient: {lasso._gradient}")
-    print(f'scikit slope: {scikit_lasso.coef_}')
 
-    '''
+    from sklearn.linear_model import Ridge
+    scikit_ridge = Ridge(alpha=1.0)
+    scikit_ridge.fit(x, y)
+    
+    reg = Regularization()
+    lasso = LassoRegression(dimension=np.size(y), default_alpha=0.1, default_penalty=5) #a=0.1, p=5
+    ridge = RidgeRegression(dimension=np.size(y), default_alpha=0.001, default_penalty=1) #a=0.001, p=1
+    x = reg.preprocessing(x)
+    
+    choice = input("Press 1 for Lasso or 2 for Regression")
+    if choice == "1":
+        lasso.train(x, y)
+        print(f"lasso slope: {lasso._slope}")
+    elif choice == "2":
+        ridge.train(x, y)
+        print(f"ridge slope: {ridge._slope}")
+    else:
+        print('invalid input, try again')
+
+  
+
+
+    #clearing the log file to add new values
+    log_file_path = 'regression.log'
+    with open(log_file_path, 'w') as file:
+        file.truncate(0)
+
     model = MultipleLinearRegressor(dimension=np.size(y))
-    x = model.preprocessing(x)
+    #x = model.preprocessing(x)
     reg = linreg().fit(x, y)
 
     model.train(x, y)
@@ -436,7 +530,7 @@ if __name__ == "__main__":
     mse_scikit = mean_squared_error(y, scikit_pred)
     print(f"regression slope: {model._slope}, scikit slope: {reg.coef_}")
     print("MSE ground truth and predictions, this model: ", mse_model)
-    print("MSE ground truth and predictions, by Scikit:  ", mse_scikit)'''
+    print("MSE ground truth and predictions, by Scikit:  ", mse_scikit)
 
     # The below comments are code to test-run the ModelSaver class.
     # It was switched off, so as not to create files on the user's local pc.
