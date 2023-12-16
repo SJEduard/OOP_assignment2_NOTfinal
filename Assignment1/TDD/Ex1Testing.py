@@ -52,7 +52,7 @@ class Tests(unittest.TestCase):
 
         # This tests the Whites. About time they got tested lol
         self.assertEqual(2,
-                         Ex1Code.HowManyRight(code = np.array([1,1,5,4]))
+                         Ex1Code.HowManyRight(code = np.array([1, 1, 5, 4]))
                          .how_many_every_color_first())
 
     def GiveArrayOfEveryColorInstead(self):
