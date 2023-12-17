@@ -107,8 +107,12 @@ class PlayTheGame(CodeMaker):
         PlayTheGame().do_it_right_please()
         while self._round < 1:
             self._round += 1
-            colors_right = HowManyRight().colors_guessed_correctly()
-            colors_perfect = HowManyRight().how_many_perfect()
+            colors_right = HowManyRight(guess = self._current_guess,
+                                        code = self._code
+                                        ).colors_guessed_correctly()
+            colors_perfect = HowManyRight(guess = self._current_guess,
+                                          code = self._code
+                                          ).how_many_perfect()
         return colors_right, colors_perfect
 
 
