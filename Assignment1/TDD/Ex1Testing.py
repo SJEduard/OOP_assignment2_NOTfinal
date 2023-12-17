@@ -97,7 +97,19 @@ class Tests(unittest.TestCase):
         # I made my guess just equal to the code, it should always be four.
         self.assertEqual(4, Ex1Code.PlayTheGame()
                          .able_to_work_with_how_many_every_color())
+        
+    def PlayAFullGame_third(self):
+        # I want to both be able to see the perfects and the colors.
+        # My code will be RYGB, my guess will be RWYW.
+        # Should be one perfect, two colors.
+        a, b = Ex1Code.PlayTheGame(guess = 
+                                   np.array([5, 3, 4, 6]),
+                                   code = 
+                                   np.array([5, 1, 3, 1])
+                                   ).returning_colors_and_perfects()
+        self.assertEqual(2, a)
+        self.assertEqual(1, b)
 
 
 a = Tests()
-a.PlayAFullGame_second()
+a.PlayAFullGame_third()

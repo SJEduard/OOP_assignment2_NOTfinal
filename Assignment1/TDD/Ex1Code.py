@@ -46,7 +46,7 @@ class PlayTheGame(CodeMaker):
 
     def play_ten_rounds_old(self):
         ''' This method is redundant. It was useful for
-            testing TDD. It will not be called.'''
+            testing TDD. It will not be called during the full game.'''
         code = CodeMaker().build_code()
         PlayTheGame().do_it_right_please()
         for i in range(10):
@@ -67,7 +67,7 @@ class PlayTheGame(CodeMaker):
 
     def count_ten_rounds(self):
         ''' This method is redundant. It was useful for
-            testing TDD. It will not be called.'''
+            testing TDD. It will not be called during the full game.'''
         PlayTheGame().do_it_right_please()
         while self._round < 10:
             self._round += 1
@@ -75,7 +75,7 @@ class PlayTheGame(CodeMaker):
     
     def able_to_work_with_how_many_every_color(self):
         ''' This method is redundant. It was useful for
-            testing TDD. It will not be called.'''
+            testing TDD. It will not be called during the full game.'''
         self._code = CodeMaker().build_code()
         
         self._current_guess = self._code 
@@ -86,6 +86,35 @@ class PlayTheGame(CodeMaker):
                                         code = self._code
                                         ).colors_guessed_correctly()
         return colors_right
+
+    def able_to_work_with_how_many_every_color(self):
+        ''' This method is redundant. It was useful for
+            testing TDD. It will not be called during the full game.'''
+        self._code = CodeMaker().build_code()
+        
+        self._current_guess = self._code 
+        PlayTheGame().do_it_right_please()
+        while self._round < 1:
+            self._round += 1
+            colors_right = HowManyRight(guess = self._current_guess,
+                                        code = self._code
+                                        ).colors_guessed_correctly()
+        return colors_right
+
+    def returning_colors_and_perfects(self):
+        ''' This method is redundant. It was useful for
+            testing TDD. It will not be called during the full game.'''
+        self._code = CodeMaker().build_code()
+        
+        self._current_guess = self._code 
+        PlayTheGame().do_it_right_please()
+        while self._round < 1:
+            self._round += 1
+            colors_right = HowManyRight(guess = self._current_guess,
+                                        code = self._code
+                                        ).colors_guessed_correctly()
+            colors_perfect = HowManyRight().how_many_perfect()
+        return colors_right, colors_perfect
 
 
 class HowManyRight(PlayTheGame):
@@ -98,7 +127,7 @@ class HowManyRight(PlayTheGame):
 
     def how_many_reds(self):
         ''' This method is redundant. It was useful as part of the testing
-            with TDD. It will not be called.'''
+            with TDD. It will not be called during the full game.'''
         howmany = 0
         for i in range(4):
             if self._code[i] == 5:
@@ -107,7 +136,7 @@ class HowManyRight(PlayTheGame):
 
     def how_many_every_color_first(self):
         ''' This method is redundant. It was useful as part of the testing
-            with TDD. It will not be called.'''
+            with TDD. It will not be called during the full game.'''
         code_hist = np.array([0,0,0,0,0,0])
         for i in range(4):
             if self._code[i] == 1:
