@@ -92,6 +92,12 @@ class Tests(unittest.TestCase):
         # Let's try to at least _reach_ 10 rounds.
         self.assertEqual(10, Ex1Code.PlayTheGame().count_ten_rounds())
 
+    def PlayAFullGame_second(self):
+        # Only play one round. Returns the number of correct colors.
+        # I made my guess just equal to the code, it should always be four.
+        self.assertEqual(4, Ex1Code.PlayTheGame()
+                         .able_to_work_with_how_many_every_color())
+
 
 a = Tests()
-a.PlayAFullGame_first()
+a.PlayAFullGame_second()
