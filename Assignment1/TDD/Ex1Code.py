@@ -104,15 +104,10 @@ class PlayTheGame(CodeMaker):
     def returning_colors_and_perfects(self):
         ''' This method is redundant. It was useful for
             testing TDD. It will not be called during the full game.'''
-        self._code = CodeMaker().build_code()
-        
-        self._current_guess = self._code 
         PlayTheGame().do_it_right_please()
         while self._round < 1:
             self._round += 1
-            colors_right = HowManyRight(guess = self._current_guess,
-                                        code = self._code
-                                        ).colors_guessed_correctly()
+            colors_right = HowManyRight().colors_guessed_correctly()
             colors_perfect = HowManyRight().how_many_perfect()
         return colors_right, colors_perfect
 

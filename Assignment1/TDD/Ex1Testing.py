@@ -107,6 +107,7 @@ class Tests(unittest.TestCase):
                                    code = 
                                    np.array([5, 1, 3, 1])
                                    ).returning_colors_and_perfects()
+        
         self.assertEqual(2, a)
         self.assertEqual(1, b)
 
