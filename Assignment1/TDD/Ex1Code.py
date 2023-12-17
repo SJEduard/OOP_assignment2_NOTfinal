@@ -27,6 +27,7 @@ class PlayTheGame(CodeMaker):
               "G for Green, R for Red and B for Blue.")
 
     def take_user_input(self):
+        # Initialize current guess, to check for faulty input.
         self._current_guess = np.array([0, 0, 0, 0])
         user_input = input()
         for i in range(6):
@@ -63,7 +64,8 @@ class PlayTheGame(CodeMaker):
                 if np.array_equal(self._current_guess, code):
                     print("You win!")
                     return
-                print(code)
+                print(code) # Allows termination through user input
+                            # by just making the code visible.
 
     def count_ten_rounds(self):
         ''' This method is redundant. It was useful for
@@ -100,6 +102,44 @@ class PlayTheGame(CodeMaker):
                                           code = self._code
                                           ).how_many_perfect()
         return colors_right, colors_perfect
+    
+    def play_ten_rounds(self):
+        self._code = CodeMaker().build_code()
+        PlayTheGame().do_it_right_please()
+
+        while self._round < 10:
+            self._round += 1
+            print(f"Round: {self._round}")
+            self._current_guess = PlayTheGame(
+                guess = self._current_guess).take_user_input()
+            colors_right = HowManyRight(guess = self._current_guess,
+                                        code = self._code
+                                        ).colors_guessed_correctly()
+            colors_perfect = HowManyRight(guess = self._current_guess,
+                                          code = self._code
+                                          ).how_many_perfect()
+            
+            if colors_perfect == 4:
+                print("You win! The code was: \n"
+                      f"{ListOfColors[self._code[0]-1]}"
+                      f"{ListOfColors[self._code[1]-1]}"
+                      f"{ListOfColors[self._code[2]-1]}"
+                      f"{ListOfColors[self._code[3]-1]}.")
+                return  # This is the only exit during the ten rounds.
+            else: 
+                print("Correct, wrong position: " 
+                      f"{colors_right-colors_perfect}\n"
+                      f"Correct, right position: {colors_perfect}")
+
+        # End of the while-loop
+
+        print("Sorry, you did not win in 10 rounds! \n"
+              "The code was: \n"
+                f"{ListOfColors[self._code[0]-1]}"
+                f"{ListOfColors[self._code[1]-1]}"
+                f"{ListOfColors[self._code[2]-1]}"
+                f"{ListOfColors[self._code[3]-1]}.")
+        return
 
 
 class HowManyRight(PlayTheGame):
