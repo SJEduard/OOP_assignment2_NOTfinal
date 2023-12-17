@@ -21,7 +21,7 @@ class CodeMaker:
 
 class PlayTheGame(CodeMaker):
     def do_it_right_please(self):
-        print("Guess the code in 10 rounds.\n"
+        print("Guess the code.\n"
               "Give input containing no spaces, consisting "
               "of W for White, K for Black, Y for Yellow, "
               "G for Green, R for Red and B for Blue.")
@@ -103,11 +103,16 @@ class PlayTheGame(CodeMaker):
                                           ).how_many_perfect()
         return colors_right, colors_perfect
     
-    def play_ten_rounds(self):
+    def play_the_game(self, max_rounds = 10):
+        max_rounds = int(input("How many rounds do you want to play?\n"
+                           "Press 0 for the default setting of "
+                           "10 rounds.\n"))
+        if max_rounds == 0:
+            max_rounds = 10 # How else did you think I'd set the default, bozo
         self._code = CodeMaker().build_code()
         PlayTheGame().do_it_right_please()
 
-        while self._round < 10:
+        while self._round < max_rounds:
             self._round += 1
             print(f"Round: {self._round}")
             self._current_guess = PlayTheGame(
@@ -133,7 +138,7 @@ class PlayTheGame(CodeMaker):
 
         # End of the while-loop
 
-        print("Sorry, you did not win in 10 rounds! \n"
+        print("Sorry, you did not win in the maximum number of rounds! \n"
               "The code was: \n"
                 f"{ListOfColors[self._code[0]-1]}"
                 f"{ListOfColors[self._code[1]-1]}"

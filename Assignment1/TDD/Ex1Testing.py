@@ -112,4 +112,4 @@ class Tests(unittest.TestCase):
         self.assertEqual(1, b)
 
 
-Ex1Code.PlayTheGame().play_ten_rounds()
+Ex1Code.PlayTheGame().play_the_game()
