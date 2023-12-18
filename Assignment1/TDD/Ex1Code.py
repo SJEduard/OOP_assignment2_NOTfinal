@@ -14,6 +14,13 @@ class CodeMaker:
         self._round = round
 
     def build_code(self):
+        '''
+        Builds a random code from the available colors.
+        Repeated entries are allowed.
+
+        Returns:
+            self._code: The attribute containing the four-color code.
+        '''
         for i in range(4):
             self._code[i] = np.random.choice(self._colors)
         return self._code
@@ -21,24 +28,34 @@ class CodeMaker:
 
 class PlayTheGame(CodeMaker):
     def do_it_right_please(self):
+        '''
+        Prints the rules of the game.
+        '''
         print("Guess the code.\n"
               "Give input containing no spaces, consisting "
               "of W for White, K for Black, Y for Yellow, "
               "G for Green, R for Red and B for Blue.")
 
     def take_user_input(self):
+        '''
+        Places the user's input-code into the _current_guess attribute.
+
+        Returns:
+            self._current_guess: the attribute containing the current guess.
+        '''
+
         # Initialize current guess, to check for faulty input.
         self._current_guess = np.array([0, 0, 0, 0])
         user_input = input()
         for i in range(6):
             if user_input[0] == ListOfColors[i]:
-                self._current_guess[0] = i+1
+                self._current_guess[0] = i + 1
             if user_input[1] == ListOfColors[i]:
-                self._current_guess[1] = i+1
+                self._current_guess[1] = i + 1
             if user_input[2] == ListOfColors[i]:
-                self._current_guess[2] = i+1
+                self._current_guess[2] = i + 1
             if user_input[3] == ListOfColors[i]:
-                self._current_guess[3] = i+1
+                self._current_guess[3] = i + 1
         if any(self._current_guess == 0):
             print("Invalid Input! Game Over! See the instructions "
                   "at the start.")
@@ -51,7 +68,7 @@ class PlayTheGame(CodeMaker):
         code = CodeMaker().build_code()
         PlayTheGame().do_it_right_please()
         for i in range(10):
-            if self._round==10:
+            if self._round == 10:
                 print("Sorry, you did not win in 10 rounds!")
                 return
             else:
@@ -104,6 +121,31 @@ class PlayTheGame(CodeMaker):
         return colors_right, colors_perfect
     
     def play_the_game(self, max_rounds = 10):
+        '''
+        This method governs the playing of the game.
+
+        At the start of the game, the player may choose how many rounds they
+        want to have for guessing the code.
+
+        During every round, the method lets the user input their guess at the
+        code, and compares this to the code that was randomly built at the
+        start.
+
+        After the guess is made, the input is compared to the code using
+        the how_many_perfect and colors_guessed_correctly methods of the child
+        class HowManyRight.
+        It prints the number of perfect guesses as well as the number of
+        right colors but wrong positions.
+
+        Terminates when the player has guessed the code correctly or when
+        the user has surpassed the number of rounds they chose to play for.
+
+        Parameters:
+            max_rounds: How many rounds the user wants to play. Default: 10.
+
+        Returns: 
+
+        '''
         max_rounds = int(input("How many rounds do you want to play?\n"
                            "Press 0 for the default setting of "
                            "10 rounds.\n"))
@@ -126,29 +168,37 @@ class PlayTheGame(CodeMaker):
             
             if colors_perfect == 4:
                 print("You win! The code was: \n"
-                      f"{ListOfColors[self._code[0]-1]}"
-                      f"{ListOfColors[self._code[1]-1]}"
-                      f"{ListOfColors[self._code[2]-1]}"
-                      f"{ListOfColors[self._code[3]-1]}.")
+                      f"{ListOfColors[self._code[0] - 1]}"
+                      f"{ListOfColors[self._code[1] - 1]}"
+                      f"{ListOfColors[self._code[2] - 1]}"
+                      f"{ListOfColors[self._code[3] - 1]}.")
                 return  # This is the only exit during the ten rounds.
             else: 
                 print("Correct, wrong position: " 
-                      f"{colors_right-colors_perfect}\n"
+                      f"{colors_right - colors_perfect}\n"
                       f"Correct, right position: {colors_perfect}")
 
         # End of the while-loop
 
         print("Sorry, you did not win in the maximum number of rounds! \n"
               "The code was: \n"
-                f"{ListOfColors[self._code[0]-1]}"
-                f"{ListOfColors[self._code[1]-1]}"
-                f"{ListOfColors[self._code[2]-1]}"
-                f"{ListOfColors[self._code[3]-1]}.")
+                f"{ListOfColors[self._code[0] - 1]}"
+                f"{ListOfColors[self._code[1] - 1]}"
+                f"{ListOfColors[self._code[2] - 1]}"
+                f"{ListOfColors[self._code[3] - 1]}.")
         return
 
 
 class HowManyRight(PlayTheGame):
     def how_many_perfect(self):
+        '''
+        When called, this function compares every entry of the guess to the
+        code.
+
+        Returns: 
+            perfect: how many of the guesses were the correct color in the
+            right place.
+        '''
         perfect = 0
         for i in range(4):
             if self._code[i] == self._current_guess[i]:
@@ -167,7 +217,7 @@ class HowManyRight(PlayTheGame):
     def how_many_every_color_first(self):
         ''' This method is redundant. It was useful as part of the testing
             with TDD. It will not be called during the full game.'''
-        code_hist = np.array([0,0,0,0,0,0])
+        code_hist = np.array([0, 0, 0, 0, 0, 0])
         for i in range(4):
             if self._code[i] == 1:
                 code_hist[0] += 1
@@ -184,7 +234,17 @@ class HowManyRight(PlayTheGame):
         return code_hist[0]
 
     def how_many_every_color(self, code = np.array([0, 0, 0, 0])):
-        code_hist = np.array([0,0,0,0,0,0])
+        '''
+        This function turns a four-digit code consisting of entries 1-6
+        into a histogram of those numbers.
+
+        Parameters:
+            code: contains four numbers 1 through 6 that make up the code.
+
+        Returns:
+            code_hist: a histogram of the numbers in the code.
+        '''
+        code_hist = np.array([0, 0, 0, 0, 0, 0])
         for i in range(4):
             if code[i] == 1:
                 code_hist[0] += 1
@@ -201,9 +261,20 @@ class HowManyRight(PlayTheGame):
         return code_hist
 
     def how_many_every_color_guess(self, guess = np.array([0, 0, 0, 0])):
+        ''' This method is redundant. It was useful for
+            testing TDD. It will not be called during the full game.'''
         return HowManyRight().how_many_every_color(guess)
 
     def colors_guessed_correctly(self):
+        '''
+        When called, this method compares the histograms of both the current
+        guess and the code.
+        Upon finding a match in one of the colors, this match is counted and
+        removed from both the guess and the code, to avoid double-counting.
+
+        Returns: 
+            correctcolors: The number of colors guessed correctly.
+        '''
         correctcolors = 0
         hist_guess = HowManyRight().how_many_every_color(self._current_guess)
         hist_code = HowManyRight().how_many_every_color(self._code)
