@@ -6,7 +6,7 @@ ListOfColors = np.array(["W", "K", "Y", "G", "R", "B"])
 
 
 class CodeMaker:
-    def __init__(self, round = 0, guess = np.array([0, 0, 0, 0]), 
+    def __init__(self, round = 0, guess = np.array([0, 0, 0, 0]),
                  code = np.array([0, 0, 0, 0])):
         self._colors = np.array([1, 2, 3, 4, 5, 6])
         self._code = code
@@ -91,13 +91,13 @@ class PlayTheGame(CodeMaker):
         while self._round < 10:
             self._round += 1
         return self._round
-    
+
     def able_to_work_with_how_many_every_color(self):
         ''' This method is redundant. It was useful for
             testing TDD. It will not be called during the full game.'''
         self._code = CodeMaker().build_code()
-        
-        self._current_guess = self._code 
+
+        self._current_guess = self._code
         PlayTheGame().do_it_right_please()
         while self._round < 1:
             self._round += 1
@@ -119,7 +119,7 @@ class PlayTheGame(CodeMaker):
                                           code = self._code
                                           ).how_many_perfect()
         return colors_right, colors_perfect
-    
+
     def play_the_game(self, max_rounds = 10):
         '''
         This method governs the playing of the game.
@@ -143,7 +143,7 @@ class PlayTheGame(CodeMaker):
         Parameters:
             max_rounds: How many rounds the user wants to play. Default: 10.
 
-        Returns: 
+        Returns:
 
         '''
         max_rounds = int(input("How many rounds do you want to play?\n"
@@ -165,7 +165,7 @@ class PlayTheGame(CodeMaker):
             colors_perfect = HowManyRight(guess = self._current_guess,
                                           code = self._code
                                           ).how_many_perfect()
-            
+
             if colors_perfect == 4:
                 print("You win! The code was: \n"
                       f"{ListOfColors[self._code[0] - 1]}"
@@ -173,8 +173,8 @@ class PlayTheGame(CodeMaker):
                       f"{ListOfColors[self._code[2] - 1]}"
                       f"{ListOfColors[self._code[3] - 1]}.")
                 return  # This is the only exit during the ten rounds.
-            else: 
-                print("Correct, wrong position: " 
+            else:
+                print("Correct, wrong position: "
                       f"{colors_right - colors_perfect}\n"
                       f"Correct, right position: {colors_perfect}")
 
@@ -195,7 +195,7 @@ class HowManyRight(PlayTheGame):
         When called, this function compares every entry of the guess to the
         code.
 
-        Returns: 
+        Returns:
             perfect: how many of the guesses were the correct color in the
             right place.
         '''
@@ -272,7 +272,7 @@ class HowManyRight(PlayTheGame):
         Upon finding a match in one of the colors, this match is counted and
         removed from both the guess and the code, to avoid double-counting.
 
-        Returns: 
+        Returns:
             correctcolors: The number of colors guessed correctly.
         '''
         correctcolors = 0
